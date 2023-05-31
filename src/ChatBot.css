@@ -1,13 +1,12 @@
-.chatbot-container {
-    display: flex;
+.container {
+    flex: 1;
     flex-direction: column;
-    height: 100%;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
+    margin: 0 auto;
+    height: 100vh;
 }
 
 .chatbot-header {
+    height: 7vh;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -27,15 +26,33 @@
     font-size: 16px;
 }
 
+.chatbot-container {
+    display: flex;
+    height: 91vh;
+}
+
+.feature-container {
+    width: 25%;
+    background-color: #a5f8ad;
+}
+
+.message-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
 .chatbot-messages {
     flex-grow: 1;
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: #d3d1d3;
     overflow-y: auto;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .message {
-    max-width: 70%;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -43,14 +60,14 @@
 }
 
 .user {
-    background-color: #007bff;
+    padding-left: 15vh;
+    background-color: #b205ec;
     color: #fff;
-    align-self: flex-start;
+    text-align: start;
 }
 
 .chatbot {
     background-color: #f2f2f2;
-    align-self: flex-end;
 }
 
 .chatbot-input {
@@ -61,13 +78,20 @@
     border-top: 1px solid #ccc;
 }
 
-.chatbot-input input {
+.chatbot-input textarea {
+    resize: none;
     flex-grow: 1;
+    height: 40px;
     padding: 8px;
     border: none;
     border-radius: 20px;
     margin-right: 10px;
     font-size: 14px;
+    transition: height 0.2s ease;
+}
+
+.chatbot-input textarea:focus {
+    outline: none;
 }
 
 .chatbot-input button {
