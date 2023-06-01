@@ -1,0 +1,45 @@
+.chatbot-header {
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    justify-content: space-between;
+}
+
+.avatar-title {
+    display: flex;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.chatbot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 5px;
+}
+
+.chatbot-title {
+    margin: 5px 30px 5px 10px;
+    font-size: 16px;
+}
+
+.active {
+    list-style: none;
+}
+
+.nonActive {
+    list-style: none;
+}

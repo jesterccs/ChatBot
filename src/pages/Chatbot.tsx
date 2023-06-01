@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./ChatBot.css";
+import React, {useState, useEffect, useRef} from "react";
+import "../styles/ChatBot.css";
 
 interface Message {
     id: number;
@@ -16,7 +16,7 @@ const Chatbot: React.FC = () => {
     useEffect(() => {
         // Scroll to the bottom of the chat window whenever new messages are added
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+            messagesEndRef.current.scrollIntoView({behavior: "smooth"});
         }
     }, [messages]);
 
@@ -34,7 +34,9 @@ const Chatbot: React.FC = () => {
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (inputValue.trim() !== "") {
+        const trimmedValue = inputValue.trim();
+
+        if (trimmedValue !== "") {
             const newMessage: Message = {
                 id: messages.length + 1,
                 content: inputValue,
@@ -43,11 +45,13 @@ const Chatbot: React.FC = () => {
 
             setMessages([...messages, newMessage]);
             setInputValue("");
+            console.log(newMessage)
             if (inputRef.current) {
                 inputRef.current.style.height = "auto";
             }
         }
     };
+
 
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -61,12 +65,6 @@ const Chatbot: React.FC = () => {
 
     return (
         <div className="container">
-            {/*Header*/}
-            <div className="chatbot-header">
-                <div className="chatbot-avatar"></div>
-                <div className="chatbot-title">ChatBot</div>
-            </div>
-
             <div className="chatbot-container">
                 {/*Features*/}
                 <div className="feature-container"></div>
@@ -80,22 +78,23 @@ const Chatbot: React.FC = () => {
                                 className={`message ${
                                     message.sender === "user" ? "user" : "chatbot"
                                 }`}
+                                style={{ whiteSpace: "pre-wrap" }}
                             >
                                 {message.content}
                             </div>
                         ))}
-                        <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef}/>
                     </div>
 
                     <form className="chatbot-input" onSubmit={handleFormSubmit}>
-            <textarea
-                ref={inputRef}
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                onInput={handleInputHeight}
-                placeholder="Type your message..."
-            />
+                        <textarea
+                            ref={inputRef}
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
+                            onInput={handleInputHeight}
+                            placeholder="Type your message..."
+                        />
                         <button type="submit">Send</button>
                     </form>
                 </div>
