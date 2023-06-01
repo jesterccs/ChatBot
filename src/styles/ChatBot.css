@@ -1,9 +1,8 @@
 .container {
     flex: 1;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 0;
 }
-
 
 .chatbot-container {
     display: flex;
@@ -11,21 +10,22 @@
 }
 
 .feature-container {
-    width: 25%;
+    flex: 1;
     background-color: #a5f8ad;
 }
 
 .message-container {
-    width: 75%;
+    flex: 5;
     display: flex;
     flex-direction: column;
+    background-color: darkgray;
+    overflow-y: auto;
 }
 
 .chatbot-messages {
     flex-grow: 1;
     padding: 10px;
-    background-color: #d3d1d3;
-    overflow-y: auto;
+    background-color: darkgray;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
@@ -47,25 +47,40 @@
 
 .chatbot-input {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end; /* Align items to the bottom */
     padding: 10px;
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-    max-height: 40%;
+    background-color: darkgray;
+}
+
+.input-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
 }
 
 .chatbot-input textarea {
+    flex-grow: 1;
+    min-height: 30px;
     max-height: 200px;
     resize: none;
-    flex-grow: 1;
-    height: 10px;
     padding: 8px;
-    border: 0px;
+    border: none;
     border-radius: 20px;
     margin-right: 10px;
     font-size: 14px;
     transition: height 0.2s ease;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #bbb transparent;
+}
+
+.chatbot-input textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatbot-input textarea::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 4px;
 }
 
 .chatbot-input textarea:focus {

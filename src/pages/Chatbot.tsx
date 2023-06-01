@@ -53,7 +53,6 @@ const Chatbot: React.FC = () => {
     };
 
 
-
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
@@ -78,7 +77,7 @@ const Chatbot: React.FC = () => {
                                 className={`message ${
                                     message.sender === "user" ? "user" : "chatbot"
                                 }`}
-                                style={{ whiteSpace: "pre-wrap" }}
+                                style={{whiteSpace: "pre-wrap"}}
                             >
                                 {message.content}
                             </div>
@@ -87,15 +86,16 @@ const Chatbot: React.FC = () => {
                     </div>
 
                     <form className="chatbot-input" onSubmit={handleFormSubmit}>
-                        <textarea
-                            ref={inputRef}
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            onKeyDown={handleKeyDown}
-                            onInput={handleInputHeight}
-                            placeholder="Type your message..."
-                        />
-                        <button type="submit">Send</button>
+                        <div className="input-container">
+                          <textarea
+                              ref={inputRef}
+                              value={inputValue}
+                              onChange={handleInputChange}
+                              onKeyDown={handleKeyDown}
+                              onInput={handleInputHeight}
+                              placeholder="Type your message..."/>
+                            <button type="submit">Send</button>
+                        </div>
                     </form>
                 </div>
             </div>
