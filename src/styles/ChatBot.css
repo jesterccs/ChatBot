@@ -1,6 +1,6 @@
 .container {
     flex: 1;
-    flex-direction: column;
+    /*flex-direction: column;*/
     margin: 0;
 }
 
@@ -36,6 +36,8 @@
     padding: 10px;
     border-radius: 10px;
     font-size: 14px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user {
@@ -47,9 +49,9 @@
 
 .chatbot-input {
     display: flex;
-    align-items: flex-end; /* Align items to the bottom */
+    align-items: flex-end;
     padding: 10px;
-    background-color: darkgray;
+    background-color: #f5f5f5;
 }
 
 .input-container {

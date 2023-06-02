@@ -45,7 +45,7 @@ const Chatbot: React.FC = () => {
 
             setMessages([...messages, newMessage]);
             setInputValue("");
-            console.log(newMessage)
+            console.log(messages)
             if (inputRef.current) {
                 inputRef.current.style.height = "auto";
             }
@@ -72,18 +72,19 @@ const Chatbot: React.FC = () => {
                 <div className="message-container">
                     <div className="chatbot-messages">
                         {messages.map((message) => (
-                            <div
-                                key={message.id}
-                                className={`message ${
-                                    message.sender === "user" ? "user" : "chatbot"
-                                }`}
-                                style={{whiteSpace: "pre-wrap"}}
-                            >
-                                {message.content}
-                            </div>
+                            <React.Fragment key={message.id}>
+                                <div
+                                    className={`message ${message.sender === "user" ? "user" : "chatbot"}`}
+                                    style={{ whiteSpace: "pre-wrap" }}
+                                >
+                                    {message.content}
+                                </div>
+                                <div>response</div>
+                            </React.Fragment>
                         ))}
-                        <div ref={messagesEndRef}/>
+                        <div ref={messagesEndRef} />
                     </div>
+
 
                     <form className="chatbot-input" onSubmit={handleFormSubmit}>
                         <div className="input-container">
