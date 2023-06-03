@@ -13,6 +13,16 @@ const Chatbot: React.FC = () => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
+    const [useCaseIsOpen, setUseCaseIsOpen] = useState(false);
+    const [useCaseSelectedOption, setUseCaseSelectedOption] = useState('');
+    const [languageIsOpen, setLanguageIsOpen] = useState(false)
+    const [languageSelectedOption, setLanguageSelectedOption] = useState('')
+
+
+    const useCaseOptions = ['Option 1', 'Option 2', 'Option 3'];
+    const languageOptions = ['English', 'Sinhala', 'Tamil']
+
+
     useEffect(() => {
         // Scroll to the bottom of the chat window whenever new messages are added
         if (messagesEndRef.current) {
@@ -62,11 +72,69 @@ const Chatbot: React.FC = () => {
         }
     };
 
+
+    const useCaseToggleMenu = () => {
+        setUseCaseIsOpen(!useCaseIsOpen);
+    };
+
+    const handleOptionClickUseCase = (option: any) => {
+        setUseCaseSelectedOption(option);
+        setUseCaseIsOpen(false);
+    };
+
+    const languageToggleMenu = () => {
+        setLanguageIsOpen(!languageIsOpen)
+    }
+
+    const handleOptionsClickLanguage = (language: any) => {
+        setLanguageSelectedOption(language)
+        setLanguageIsOpen(false)
+    }
+
     return (
         <div className="container">
             <div className="chatbot-container">
                 {/*Features*/}
-                <div className="feature-container"></div>
+                <div className="feature-container">
+
+                    <div className="language-dropdown-container">
+                        <label className="language-dropdown-label">Select a Language</label>
+                        <div className="language-dropdown">
+                            <button className="language-dropdown-toggle" onClick={languageToggleMenu}>
+                                {languageSelectedOption ? languageSelectedOption : languageOptions[0]}
+                            </button>
+                            {languageIsOpen && (
+                                <ul className="language-dropdown-menu">
+                                    {languageOptions.map((language, index) => (
+                                        <li key={index} onClick={() => handleOptionsClickLanguage(language)}>
+                                            {language}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="useCase-dropdown-container">
+                        <label className="useCase-dropdown-label">Select a Use Case</label>
+                        <div className="useCase-dropdown">
+                            <button className="useCase-dropdown-toggle" onClick={useCaseToggleMenu}>
+                                {useCaseSelectedOption ? useCaseSelectedOption : useCaseOptions[0]}
+                            </button>
+                            {useCaseIsOpen && (
+                                <ul className="useCase-dropdown-menu">
+                                    {useCaseOptions.map((option, index) => (
+                                        <li key={index} onClick={() => handleOptionClickUseCase(option)}>
+                                            {option}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+
+
+                </div>
 
                 {/*Message container*/}
                 <div className="message-container">
@@ -75,14 +143,14 @@ const Chatbot: React.FC = () => {
                             <React.Fragment key={message.id}>
                                 <div
                                     className={`message ${message.sender === "user" ? "user" : "chatbot"}`}
-                                    style={{ whiteSpace: "pre-wrap" }}
+                                    style={{whiteSpace: "pre-wrap"}}
                                 >
                                     {message.content}
                                 </div>
                                 <div>response</div>
                             </React.Fragment>
                         ))}
-                        <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef}/>
                     </div>
 
 
