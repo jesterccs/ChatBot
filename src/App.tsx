@@ -5,18 +5,22 @@ import Chatbot from "./pages/Chatbot";
 import NavBar from "./NavBar";
 import History from "./pages/History";
 import Account from "./pages/Account";
+import LandingPage from './pages/LandingPage';
 
 
 function App() {
+
   return (
       <>
       <NavBar/>
         <div className="container">
           <Routes>
-            <Route path="/" element={<Chatbot/>}/>
+            <Route path="/" element={<LandingPage/>}/>
+            <Route path="/chat" element={<ChatBot/>}/>
             <Route path="/history" element={<History/>}/>
             <Route path="/account" element={<Account/>}/>
           </Routes>
+          
         </div>
       </>
   );
