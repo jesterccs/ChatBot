@@ -55,6 +55,7 @@ const Chatbot: React.FC = () => {
 
             setMessages([...messages, newMessage]);
             setInputValue("");
+            console.log(newMessage)
             console.log(messages)
             if (inputRef.current) {
                 inputRef.current.style.height = "auto";
@@ -94,9 +95,11 @@ const Chatbot: React.FC = () => {
     return (
         <div className="container">
             <div className="chatbot-container">
+
                 {/*Features*/}
                 <div className="feature-container">
 
+                    {/*Language selection*/}
                     <div className="language-dropdown-container">
                         <label className="language-dropdown-label">Select a Language</label>
                         <div className="language-dropdown">
@@ -115,6 +118,7 @@ const Chatbot: React.FC = () => {
                         </div>
                     </div>
 
+                    {/*Use case selection*/}
                     <div className="useCase-dropdown-container">
                         <label className="useCase-dropdown-label">Select a Use Case</label>
                         <div className="useCase-dropdown">
@@ -153,7 +157,7 @@ const Chatbot: React.FC = () => {
                         <div ref={messagesEndRef}/>
                     </div>
 
-
+                    {/*Input field*/}
                     <form className="chatbot-input" onSubmit={handleFormSubmit}>
                         <div className="input-container">
                           <textarea
@@ -166,6 +170,7 @@ const Chatbot: React.FC = () => {
                             <button type="submit">Send</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
