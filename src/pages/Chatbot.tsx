@@ -54,7 +54,7 @@ const Chatbot: React.FC = () => {
         }
     };
 
-    const handleFormSubmit = (event: React.FormEvent) => {
+    const handleFormSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         const trimmedValue = inputValue.trim();
@@ -65,6 +65,13 @@ const Chatbot: React.FC = () => {
                 content: inputValue,
                 sender: "user",
             };
+            const obj = {
+                        sender: newMessage.sender,
+                        message: newMessage.content,
+                        language: languageSelectedOption,
+                        button: useCaseSelectedOption?.value
+                    }
+            await Test(obj)
             setMessages((prevMessages) => [...prevMessages, newMessage]);
             setInputValue("");
             if (inputRef.current) {
