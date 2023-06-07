@@ -12,7 +12,6 @@
             body: JSON.stringify(postData)
         })
         // console.log(response.json())
-        const json = await response.json()
-        return {"isSuccess": true, "response": json}
+        return await response.json()
     }
 

@@ -14,14 +14,21 @@ interface Option {
     value: string;
 }
 
-interface responseObj {
+interface Response {
     sender: string,
     response: string
 }
 
+interface Chat {
+    message: Message,
+    response: Response | null
+}
+
 const Chatbot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
-    const [newMessage, setNewMessage] = useState<Message>()
+    const [responses, setResponses] = useState<Response[]>([])
+    const [chat, setChat] = useState<Chat[]>([])
+
     const [inputValue, setInputValue] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -31,14 +38,12 @@ const Chatbot: React.FC = () => {
     const [languageIsOpen, setLanguageIsOpen] = useState(false)
     const [languageSelectedOption, setLanguageSelectedOption] = useState('English')
 
-    const [response, setResponse] = useState<responseObj>()
-
 
     // const useCaseOptions = ['Option 1', 'Option 2', 'Email Drafting'];
     const useCaseOptions: Option[] = [
-        {label: 'option1', value: 'Option 1'},
-        {label: 'option1', value: 'Option 2'},
         {label: 'emailDrafting', value: 'Email Drafting'},
+        {label: 'option1', value: 'Option 1'},
+        {label: 'option1', value: 'Option 2'}
     ];
     const languageOptions = ['English', 'Sinhala', 'Tamil']
 
@@ -61,6 +66,41 @@ const Chatbot: React.FC = () => {
         }
     };
 
+    // const handleFormSubmit = async (event: React.FormEvent) => {
+    //     event.preventDefault();
+    //
+    //     const trimmedValue = inputValue.trim();
+    //
+    //     if (trimmedValue !== "") {
+    //         const newMessage: Message = {
+    //             id: messages.length + 1,
+    //             content: inputValue,
+    //             sender: "user",
+    //         };
+    //         const obj = {
+    //             sender: Math.random().toString(36).substring(2),
+    //             message: newMessage.content,
+    //             language: languageSelectedOption,
+    //             button: useCaseSelectedOption?.value
+    //         }
+    //         setMessages((prevMessages) => [...prevMessages, newMessage]);
+    //         setInputValue("");
+    //         try {
+    //             const response = await Test(obj)
+    //             console.log(response)
+    //             setResponses((prevResponses) => [...prevResponses, response])
+    //             const combine = [...chat, {message: newMessage, response}]
+    //             setChat(combine)
+    //             console.log("chat..." + chat)
+    //         } catch (e) {
+    //             console.log(e)
+    //         }
+    //         if (inputRef.current) {
+    //             inputRef.current.style.height = "auto";
+    //         }
+    //     }
+    // };
+
     const handleFormSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
@@ -68,26 +108,39 @@ const Chatbot: React.FC = () => {
 
         if (trimmedValue !== "") {
             const newMessage: Message = {
-                id: messages.length + 1,
+                id: chat.length + 1,
                 content: inputValue,
                 sender: "user",
             };
             const obj = {
-                        sender: newMessage.sender,
-                        message: newMessage.content,
-                        language: languageSelectedOption,
-                        button: useCaseSelectedOption?.value
-            }
-            const response = await Test(obj)
-            console.log("............"+response?.response.response)
-            setResponse(response?.response)
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
+                sender: Math.random().toString(36).substring(2),
+                message: newMessage.content,
+                language: languageSelectedOption,
+                button: useCaseSelectedOption?.value,
+            };
+
             setInputValue("");
+
+            const updatedChat = [...chat, { message: newMessage, response: null }];
+            setChat(updatedChat);
+
+            try {
+                const response = await Test(obj);
+                const updatedChatWithResponse = updatedChat.map((chatItem, index) =>
+                    index === updatedChat.length - 1 ? { ...chatItem, response } : chatItem
+                );
+                setChat(updatedChatWithResponse);
+                console.log(chat)
+            } catch (e) {
+                console.log(e);
+            }
+
             if (inputRef.current) {
                 inputRef.current.style.height = "auto";
             }
         }
     };
+
 
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -182,20 +235,38 @@ const Chatbot: React.FC = () => {
 
                 {/*Message container*/}
                 <div className="message-container">
+                    {/*<div className="chatbot-messages">*/}
+                    {/*    {messages.map((message, index) => (*/}
+                    {/*        <div key={index} className={"chat"}>*/}
+                    {/*            <div className={`message ${message.sender}`} style={{ whiteSpace: "pre-wrap" }}>*/}
+                    {/*                <div>{message.content}</div>*/}
+                    {/*            </div>*/}
+                    {/*            {responses[index] && (*/}
+                    {/*                <div className={"chatbot-response"}>*/}
+                    {/*                    <div className={"response"}>{responses[index].response}</div>*/}
+                    {/*                </div>*/}
+                    {/*            )}*/}
+                    {/*        </div>*/}
+                    {/*    ))}*/}
+                    {/*    <div ref={messagesEndRef} />*/}
+                    {/*</div>*/}
+
                     <div className="chatbot-messages">
-                        {messages.map((message) => {
-                            // console.log(`Rendering message with id: ${message.id} ... ${message.content}`);
-                            return (
-                                <>
-                                    <div key={message.id} className={`message ${message.sender}`}>
-                                        {message.content}
+                        {chat.map((chatItem, index) => (
+                            <div key={index} className="chat">
+                                <div className={`message ${chatItem.message.sender}`} style={{ whiteSpace: "pre-wrap" }}>
+                                    <div>{chatItem.message.content}</div>
+                                </div>
+                                {chatItem.response && (
+                                    <div className="chatbot-response">
+                                        <div className="response">{chatItem.response.response.toString()}</div>
                                     </div>
-                                    <div>{response?.response}</div>
-                                </>
-                            )
-                        })}
-                        <div ref={messagesEndRef}/>
+                                )}
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef} />
                     </div>
+
 
                     {/*Input field*/}
                     <form className="chatbot-input" onSubmit={handleFormSubmit}>
