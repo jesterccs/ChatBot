@@ -14,6 +14,11 @@ interface Option {
     value: string;
 }
 
+interface responseObj {
+    sender: string,
+    response: string
+}
+
 const Chatbot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState<Message>()
@@ -25,6 +30,8 @@ const Chatbot: React.FC = () => {
     const [useCaseSelectedOption, setUseCaseSelectedOption] = useState<Option | null>(null);
     const [languageIsOpen, setLanguageIsOpen] = useState(false)
     const [languageSelectedOption, setLanguageSelectedOption] = useState('English')
+
+    const [response, setResponse] = useState<responseObj>()
 
 
     // const useCaseOptions = ['Option 1', 'Option 2', 'Email Drafting'];
@@ -70,8 +77,10 @@ const Chatbot: React.FC = () => {
                         message: newMessage.content,
                         language: languageSelectedOption,
                         button: useCaseSelectedOption?.value
-                    }
-            await Test(obj)
+            }
+            const response = await Test(obj)
+            console.log("............"+response?.response.response)
+            setResponse(response?.response)
             setMessages((prevMessages) => [...prevMessages, newMessage]);
             setInputValue("");
             if (inputRef.current) {
@@ -175,13 +184,13 @@ const Chatbot: React.FC = () => {
                 <div className="message-container">
                     <div className="chatbot-messages">
                         {messages.map((message) => {
-                            console.log(`Rendering message with id: ${message.id} ... ${message.content}`);
+                            // console.log(`Rendering message with id: ${message.id} ... ${message.content}`);
                             return (
                                 <>
                                     <div key={message.id} className={`message ${message.sender}`}>
                                         {message.content}
                                     </div>
-                                    <div>response</div>
+                                    <div>{response?.response}</div>
                                 </>
                             )
                         })}
