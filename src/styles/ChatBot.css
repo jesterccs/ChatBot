@@ -1,10 +1,6 @@
 .container {
     flex: 1;
-    /*flex-direction: column;*/
     margin: 0;
-}
-
-.chatbot-container {
     display: flex;
     height: 91vh;
 }
@@ -12,8 +8,20 @@
 .feature-container {
     flex: 2;
     background-color: #a5f8ad;
-    /*display: flex;*/
-    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+
+.bullet-points {
+    padding: 0 20px 0 30px;
+    background-color: #279117;
+    border-radius: 20px;
+    margin: auto 20px 10px 20px;
+    color: white;
+}
+
+.bullet-points ul {
+
 }
 
 .message-container {
@@ -249,4 +257,19 @@
 .language-dropdown-menu li:hover {
     background-color: #e2e2e2;
 }
+
+.export-btn {
+    margin: 10px;
+    height: 30px;
+    width: 60px;
+    background-color: #a5f8ad;
+    border-radius: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+
 

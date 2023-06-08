@@ -1,17 +1,12 @@
 import React, {useState, useEffect, useRef} from "react";
 import "../styles/ChatBot.css";
-import {Test} from "../api";
+import {ExportResponse, GetResponse} from "../api";
 
 
 interface Message {
     id: number;
     content: string;
     sender: "user" | "chatbot";
-}
-
-interface Option {
-    label: string;
-    value: string;
 }
 
 interface Response {
@@ -24,6 +19,13 @@ interface Chat {
     response: Response | null
 }
 
+interface MsgObj {
+    sender: string,
+    message: string,
+    language: string,
+    button: string
+}
+
 const Chatbot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [responses, setResponses] = useState<Response[]>([])
@@ -34,26 +36,26 @@ const Chatbot: React.FC = () => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const [useCaseIsOpen, setUseCaseIsOpen] = useState(false);
-    const [useCaseSelectedOption, setUseCaseSelectedOption] = useState<Option | null>(null);
+    const [useCaseSelectedOption, setUseCaseSelectedOption] = useState('Email Drafting');
     const [languageIsOpen, setLanguageIsOpen] = useState(false)
     const [languageSelectedOption, setLanguageSelectedOption] = useState('English')
+    const [msgObj, setMsgObj] = useState<MsgObj | null>(null)
 
+    const [isSelectedEmail,setIsSelectedEmail] = useState(true)
+    const [isSelectedDocument,setIsSelectedDocument] = useState(false)
+    const [isSelectedCreative,setIsSelectedCreative] = useState(false)
 
-    // const useCaseOptions = ['Option 1', 'Option 2', 'Email Drafting'];
-    const useCaseOptions: Option[] = [
-        {label: 'emailDrafting', value: 'Email Drafting'},
-        {label: 'option1', value: 'Option 1'},
-        {label: 'option1', value: 'Option 2'}
-    ];
+    const useCaseOptions = [ 'Email Drafting','Document Drafting', 'Creative Content'];
     const languageOptions = ['English', 'Sinhala', 'Tamil']
 
 
-    useEffect(() => {
-        // Scroll to the bottom of the chat window whenever new messages are added
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({behavior: "smooth"});
-        }
-    }, [messages]);
+    // useEffect(() => {
+    //     // Scroll to the bottom of the chat window whenever new messages are added
+    //     if (messagesEndRef.current) {
+    //         messagesEndRef.current.scrollIntoView({behavior: "smooth"});
+    //     }
+    //
+    // }, [messages]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(event.target.value);
@@ -105,7 +107,6 @@ const Chatbot: React.FC = () => {
         event.preventDefault();
 
         const trimmedValue = inputValue.trim();
-
         if (trimmedValue !== "") {
             const newMessage: Message = {
                 id: chat.length + 1,
@@ -113,19 +114,20 @@ const Chatbot: React.FC = () => {
                 sender: "user",
             };
             const obj = {
-                sender: Math.random().toString(36).substring(2),
+                // sender: Math.random().toString(36).substring(2),
+                sender: "User",
                 message: newMessage.content,
                 language: languageSelectedOption,
-                button: useCaseSelectedOption?.value,
+                button: useCaseSelectedOption,
             };
-
+            setMsgObj(obj)
             setInputValue("");
 
             const updatedChat = [...chat, { message: newMessage, response: null }];
             setChat(updatedChat);
 
             try {
-                const response = await Test(obj);
+                const response = await GetResponse(obj);
                 const updatedChatWithResponse = updatedChat.map((chatItem, index) =>
                     index === updatedChat.length - 1 ? { ...chatItem, response } : chatItem
                 );
@@ -160,6 +162,19 @@ const Chatbot: React.FC = () => {
     const handleOptionClickUseCase = (option: any) => {
         setUseCaseSelectedOption(option);
         setUseCaseIsOpen(false);
+        if (option === "Email Drafting") {
+            setIsSelectedEmail(true)
+            setIsSelectedDocument(false)
+            setIsSelectedCreative(false)
+        } else if (option === "Document Drafting") {
+            setIsSelectedDocument(true)
+            setIsSelectedEmail(false)
+            setIsSelectedCreative(false)
+        } else if (option === "Creative Content"){
+            setIsSelectedCreative(true)
+            setIsSelectedEmail(false)
+            setIsSelectedDocument(false)
+        }
     };
 
     const languageToggleMenu = () => {
@@ -184,11 +199,40 @@ const Chatbot: React.FC = () => {
     //
     // }
 
+    const handleOnClickExport = async (chatItem: any) => {
+        console.log(chatItem?.response?.response)
+        await ExportResponse(msgObj)
+    }
+
+
+    const emailTypes = [
+        'Introduction Email',
+        'Thank You Email',
+        'Complaint Solver Email',
+        'Meeting Request Email',
+        'Network Engage Email',
+        'Persuasive Email',
+        'Apology Email',
+    ];
+
+    const documentTypes = [
+        "Project Proposal",
+        "Business Report",
+        "Presentation",
+        "User Manual & Guide",
+        "Legal Document",
+        "Marketing Collateral"
+    ]
+
+    const contentTypes = [
+        "LinkedIn Caption",
+        "Blog Content",
+        "Instagram Caption",
+        "Datasheet Content"
+    ]
 
     return (
         <div className="container">
-            <div className="chatbot-container">
-
                 {/*Features*/}
                 <div className="feature-container">
 
@@ -216,13 +260,13 @@ const Chatbot: React.FC = () => {
                         <label className="useCase-dropdown-label">Select a Use Case</label>
                         <div className="useCase-dropdown">
                             <button className="useCase-dropdown-toggle" onClick={useCaseToggleMenu}>
-                                {useCaseSelectedOption ? useCaseSelectedOption.value : useCaseOptions[0].value}
+                                {useCaseSelectedOption ? useCaseSelectedOption : useCaseOptions[0]}
                             </button>
                             {useCaseIsOpen && (
                                 <ul className="useCase-dropdown-menu">
                                     {useCaseOptions.map((option, index) => (
                                         <li key={index} onClick={() => handleOptionClickUseCase(option)}>
-                                            {option.value}
+                                            {option}
                                         </li>
                                     ))}
                                 </ul>
@@ -230,6 +274,32 @@ const Chatbot: React.FC = () => {
                         </div>
                     </div>
 
+                    {isSelectedEmail ? <div className={"bullet-points"}>
+                        <h2>TaskBuddy will help you with any email of your choice:</h2>
+                        <ul>
+                            {emailTypes.map((type, index) => (
+                                <li key={index}>{type}</li>
+                            ))}
+                        </ul>
+                    </div> : null}
+
+                    {isSelectedDocument ? <div className={"bullet-points"}>
+                        <h2>TaskBuddy will help you with any document of your choice:</h2>
+                        <ul>
+                            {documentTypes.map((type, index) => (
+                                <li key={index}>{type}</li>
+                            ))}
+                        </ul>
+                    </div> : null}
+
+                    {isSelectedCreative ? <div className={"bullet-points"}>
+                        <h2>TaskBuddy will help you with any creative content of your choice:</h2>
+                        <ul>
+                            {contentTypes.map((type, index) => (
+                                <li key={index}>{type}</li>
+                            ))}
+                        </ul>
+                    </div> : null}
 
                 </div>
 
@@ -260,6 +330,7 @@ const Chatbot: React.FC = () => {
                                 {chatItem.response && (
                                     <div className="chatbot-response">
                                         <div className="response">{chatItem.response.response.toString()}</div>
+                                        <div className={"export-btn"} onClick={() => handleOnClickExport(chatItem)}>export</div>
                                     </div>
                                 )}
                             </div>
@@ -283,7 +354,7 @@ const Chatbot: React.FC = () => {
                     </form>
 
                 </div>
-            </div>
+
         </div>
     );
 };
