@@ -1,0 +1,85 @@
+.language-selector-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.language-selector-label {
+    font-weight: bold;
+    font-size: 18px; /* Increase the font size */
+}
+
+.language-selector-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.language-selector-option {
+    margin-bottom: 10px;
+}
+
+.language-selector-option input[type='radio'] {
+    display: none;
+}
+
+.language-selector-option label {
+    cursor: pointer;
+    padding-left: 25px;
+    position: relative;
+    color: #555;
+    font-size: 16px; /* Increase the font size */
+}
+
+.language-selector-option label:before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* Increase the size of the circle */
+    height: 20px; /* Increase the size of the circle */
+    margin-right: 5px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    background-color: #fff;
+}
+
+.language-selector-option input[type='radio']:checked + label:before {
+    background-color: #FDC360;
+    border-color: #FDC360;
+}
+
+.language-selector-option input[type='radio']:checked + label:after {
+    content: '';
+    display: inline-block;
+    width: 10px; /* Increase the size of the inner circle */
+    height: 10px; /* Increase the size of the inner circle */
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 60%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+
+/* Hover Styles */
+
+.language-selector-option label:hover:before {
+    border-color: #FF9F01;
+}
+
+.language-selector-option input[type='radio']:checked + label:hover:before {
+    background-color: #FF9F01;
+}
+
+.language-selector-option input[type='radio']:checked + label:hover:after {
+    background-color: #fff;
+}
+
+/* Transition */
+
+.language-selector-option label:before,
+.language-selector-option label:after {
+    transition: all 0.3s ease;
+}

@@ -7,17 +7,17 @@
 
 .feature-container {
     flex: 2;
-    background-color: #a5f8ad;
+    background-color: #FF9F01;
     flex-direction: column;
     display: flex;
 }
 
 .bullet-points {
     padding: 0 20px 0 30px;
-    background-color: #279117;
+    background-color: #FCD48F;
     border-radius: 20px;
     margin: auto 20px 10px 20px;
-    color: white;
+    color: black;
 }
 
 .bullet-points ul {
@@ -28,14 +28,14 @@
     flex: 5;
     display: flex;
     flex-direction: column;
-    background-color: darkgray;
+    background-color: #FBE6BF;
     overflow-y: auto;
 }
 
 .chatbot-messages {
     flex-grow: 1;
     padding: 10px;
-    background-color: darkgray;
+    background-color: #FBE6BF;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
@@ -60,8 +60,9 @@
 }
 
 .user {
-    background-color: #b205ec;
-    color: #fff;
+    background-color: #FAF8EE;
+    color: black;
+    font-weight: bold;
     text-align: left;
     align-self: flex-end; /* Align the user messages to the right */
 }
@@ -72,13 +73,15 @@
     margin: 0 0 5px 0;
     padding: 10px;
     /*flex-grow: 1;*/
-    background-color: #007bff;
+    background-color: #FDC360;
     max-width: 70%;
     align-self: flex-start;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .response {
-    color: #fff;
+    color: black;
+    font-weight: bold;
     text-align: left;
     white-space: pre-wrap;
 }
@@ -87,7 +90,7 @@
     display: flex;
     align-items: flex-end;
     padding: 10px;
-    background-color: darkgray;
+    background-color: #FBE6BF;
 }
 
 .input-container {
@@ -129,7 +132,7 @@
     padding: 8px 15px;
     border: none;
     border-radius: 20px;
-    background-color: #007bff;
+    background-color: #FF9F01;
     color: #fff;
     font-size: 14px;
     cursor: pointer;
@@ -262,14 +265,42 @@
     margin: 10px;
     height: 30px;
     width: 60px;
-    background-color: #a5f8ad;
+    background-color: #FF9F01;
     border-radius: 20px;
     display: flex;
     align-content: center;
     justify-content: center;
     line-height: 25px;
-    font-weight: bold;
+    font-weight: bolder;
+    color: white;
 }
+
+.typing-loader {
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ff9101;
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: typing 1s infinite;
+}
+
+@keyframes typing {
+    0% {
+        opacity: 0.2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
 
 
 

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import "../styles/ChatBot.css";
-import {ExportResponse, GetResponse} from "../api";
+import {ExportResponse, GetResponse} from "../api/ApiService";
+import LanguageSelector from "../Components/LanguageSelector";
 
 
 interface Message {
@@ -177,13 +178,13 @@ const Chatbot: React.FC = () => {
         }
     };
 
-    const languageToggleMenu = () => {
-        setLanguageIsOpen((prevState) => !prevState);
-    };
+    // const languageToggleMenu = () => {
+    //     setLanguageIsOpen((prevState) => !prevState);
+    // };
 
     const handleOptionsClickLanguage = (language: any) => {
         setLanguageSelectedOption(language)
-        setLanguageIsOpen(false)
+        console.log(language)
     }
 
     // const handleOnClick = async () => {
@@ -237,23 +238,31 @@ const Chatbot: React.FC = () => {
                 <div className="feature-container">
 
                     {/*Language selection*/}
-                    <div className="language-dropdown-container">
-                        <label className="language-dropdown-label">Select a Language</label>
-                        <div className="language-dropdown">
-                            <button className="language-dropdown-toggle" onClick={languageToggleMenu}>
-                                {languageSelectedOption ? languageSelectedOption : languageOptions[0]}
-                            </button>
-                            {languageIsOpen && (
-                                <ul className="language-dropdown-menu">
-                                    {languageOptions.map((language, index) => (
-                                        <li key={index} onClick={() => handleOptionsClickLanguage(language)}>
-                                            {language}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                    </div>
+                    {/*<div className="language-dropdown-container">*/}
+                    {/*    <label className="language-dropdown-label">Select a Language</label>*/}
+                    {/*    <div className="language-dropdown">*/}
+                    {/*        <button className="language-dropdown-toggle" onClick={languageToggleMenu}>*/}
+                    {/*            {languageSelectedOption ? languageSelectedOption : languageOptions[0]}*/}
+                    {/*        </button>*/}
+                    {/*        {languageIsOpen && (*/}
+                    {/*            <ul className="language-dropdown-menu">*/}
+                    {/*                {languageOptions.map((language, index) => (*/}
+                    {/*                    <li key={index} onClick={() => handleOptionsClickLanguage(language)}>*/}
+                    {/*                        {language}*/}
+                    {/*                    </li>*/}
+                    {/*                ))}*/}
+                    {/*            </ul>*/}
+                    {/*        )}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <LanguageSelector
+                        languageOptions={languageOptions}
+                        defaultLanguage={languageOptions[0]}
+                        onLanguageChange={(selectedLanguage: string) => {
+                            setLanguageSelectedOption(selectedLanguage);
+                            console.log(selectedLanguage)
+                        }}
+                    />
 
                     {/*Use case selection*/}
                     <div className="useCase-dropdown-container">
@@ -327,12 +336,20 @@ const Chatbot: React.FC = () => {
                                 <div className={`message ${chatItem.message.sender}`} style={{ whiteSpace: "pre-wrap" }}>
                                     <div>{chatItem.message.content}</div>
                                 </div>
-                                {chatItem.response && (
+                                {chatItem.response ? (
                                     <div className="chatbot-response">
                                         <div className="response">{chatItem.response.response.toString()}</div>
                                         <div className={"export-btn"} onClick={() => handleOnClickExport(chatItem)}>export</div>
                                     </div>
-                                )}
+                                )
+                                    : (
+                                        <div className="typing-loader">
+                                            <span className="dot"></span>
+                                            <span className="dot"></span>
+                                            <span className="dot"></span>
+                                        </div>
+                                    )
+                                }
                             </div>
                         ))}
                         <div ref={messagesEndRef} />
