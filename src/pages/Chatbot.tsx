@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import "../styles/ChatBot.css";
-import {ExportResponse, GetResponse} from "../api/ApiService";
+import {ExportGoogleDoc, ExportResponse, GetResponse} from "../api/ApiService";
 import LanguageSelector from "../Components/LanguageSelector";
 
 
@@ -202,7 +202,19 @@ const Chatbot: React.FC = () => {
 
     const handleOnClickExport = async (chatItem: any) => {
         console.log(chatItem?.response?.response)
-        await ExportResponse(msgObj)
+        const obj = {
+            sender: msgObj?.sender,
+            message: chatItem?.response?.response,
+            language: languageSelectedOption,
+            button: useCaseSelectedOption
+        }
+        if (useCaseSelectedOption === "Email Drafting") {
+            await ExportResponse(obj)
+        } else if (useCaseSelectedOption === "Document Drafting") {
+            await ExportGoogleDoc(obj)
+        } else {
+
+        }
     }
 
 
@@ -338,12 +350,13 @@ const Chatbot: React.FC = () => {
                                 </div>
                                 {chatItem.response ? (
                                     <div className="chatbot-response">
-                                        <div className="response">{chatItem.response.response.toString()}</div>
+                                        <div className="response">{chatItem.response.response}</div>
                                         <div className={"export-btn"} onClick={() => handleOnClickExport(chatItem)}>export</div>
                                     </div>
                                 )
                                     : (
                                         <div className="typing-loader">
+                                            <span className="dot"></span>
                                             <span className="dot"></span>
                                             <span className="dot"></span>
                                             <span className="dot"></span>

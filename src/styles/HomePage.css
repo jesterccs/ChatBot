@@ -1,0 +1,46 @@
+.background {
+    background-image: url("images/homepage_img.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 140px;
+    box-sizing: border-box;
+    }
+    
+    .content {
+      text-align: center;
+    }
+    
+    .title {
+      font-size: 32px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+    
+    .button {
+      background-color: #ff8800; /* Orange background color */
+      color: white;
+      padding: 10px 50px;
+      border-radius: 50px; /* Round border radius */
+      font-size: 16px;
+      font-weight: bold; /* Make the text bold */
+      cursor: pointer;
+      border: none; /* Remove the default button border */
+      outline: none; /* Remove the default button outline */
+      transition: background-color 0.3s ease; /* Add transition effect */
+      margin-right: 5px; /* Move the button a bit to the left */
+    }
+    
+    .button:hover {
+      background-color: #fcad4e; /* Orange background color on hover */
+    }
+    
