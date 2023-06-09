@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: white;
+    background-color: #FAF8EE;
     color: orange;
     justify-content: space-between;
 }
@@ -26,12 +26,13 @@
 }
 
 .chatbot-avatar {
-    width: 100px;
-    height: 40px;
+    width: 180px;
+    height: 70px;
     /*border-radius: 50%;*/
     background-color: #fff;
     margin: 5px;
-    background-image: url('images/taskbuddy.png');
+    background-image: url('images/taskbuddy_AI.png');
+    background-color: #FAF8EE;
     background-size: cover;
     background-position: center;
 }
