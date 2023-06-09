@@ -3,8 +3,8 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #333;
-    color: #fff;
+    background-color: white;
+    color: orange;
     justify-content: space-between;
 }
 
@@ -16,19 +16,24 @@
 .navbar {
     display: flex;
     gap: 1rem;
+    color: #FF9F01;
+    text-decoration: none;
 }
 
 .navbar a {
-    color: #fff;
+    color: orange;
     text-decoration: none;
 }
 
 .chatbot-avatar {
-    width: 40px;
+    width: 100px;
     height: 40px;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
     background-color: #fff;
     margin: 5px;
+    background-image: url('images/taskbuddy.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .chatbot-title {

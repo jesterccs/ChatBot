@@ -6,8 +6,7 @@ function NavBar() {
     return (
         <div className="chatbot-header">
             <div className="avatar-title">
-                <div className="chatbot-avatar"></div>
-                <div className="chatbot-title">TaskBuddy</div>
+                <div className="chatbot-avatar"/>
             </div>
             <div className="navbar">
                 <Link to="/chatbot/chat">Chat</Link>
