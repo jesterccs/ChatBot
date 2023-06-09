@@ -10,9 +10,9 @@ function NavBar() {
                 <div className="chatbot-title">TaskBuddy</div>
             </div>
             <div className="navbar">
-                <Link to="/">Chat</Link>
-                <CustomLink to="/history">History</CustomLink>
-                <CustomLink to="/account">Account</CustomLink>
+                <Link to="/chatbot/chat">Chat</Link>
+                <CustomLink to="/chatbot/history">History</CustomLink>
+                <CustomLink to="/chatbot/account">Account</CustomLink>
             </div>
         </div>
     )
